@@ -1,15 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 
-/**
- * Results screen for both text-based and image-based searches.
- * We handle both scenarios with props: route.params.query or route.params.imageUri
- */
-
 export default function ResultsScreen({ route, navigation }) {
   const { query, imageUri } = route.params || {};
 
-  // Placeholder results data
   const mockImageResults = [
     { id: '1', title: 'Result 1', uri: 'https://via.placeholder.com/200' },
     { id: '2', title: 'Result 2', uri: 'https://via.placeholder.com/200' }
@@ -29,7 +23,7 @@ export default function ResultsScreen({ route, navigation }) {
             style={styles.minimizeButton}
             onPress={() => alert('Minimize reference image pressed')}
           >
-            <Text style={{ color: '#fff' }}>Minimize</Text>
+            <Text style={styles.minimizeButtonText}>Minimize</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -43,7 +37,7 @@ export default function ResultsScreen({ route, navigation }) {
               style={styles.addToSearchButton}
               onPress={() => alert('Add to search pressed')}
             >
-              <Text style={{ color: '#fff' }}>Add to search</Text>
+              <Text style={styles.addToSearchButtonText}>Add to search</Text>
             </TouchableOpacity>
           </View>
         ))}
@@ -53,7 +47,7 @@ export default function ResultsScreen({ route, navigation }) {
         style={styles.goBackButton}
         onPress={() => navigation.navigate('Home')}
       >
-        <Text style={{ color: '#fff' }}>Go Back Home</Text>
+        <Text style={styles.goBackButtonText}>Go Back Home</Text>
       </TouchableOpacity>
     </View>
   );
@@ -92,6 +86,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginTop: 6,
   },
+  minimizeButtonText: {
+    color: '#fff',
+  },
   resultsContainer: {
     width: '100%',
     marginBottom: 20,
@@ -120,11 +117,17 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 4,
   },
+  addToSearchButtonText: {
+    color: '#fff',
+  },
   goBackButton: {
     backgroundColor: '#4285F4',
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 8,
     marginBottom: 20,
+  },
+  goBackButtonText: {
+    color: '#fff',
   },
 });

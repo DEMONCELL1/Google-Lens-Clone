@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useCameraDevice, Camera } from 'react-native-vision-camera';
-import Icon from '@react-native-vector-icons/fontawesome';
+import Icon from 'react-native-vector-icons/fontawesome';
 
 export default function LensScreen({ navigation }) {
   const [cameraPermission, setCameraPermission] = useState(null);
-
-  // Get all available camera devices (front, back, etc.)
- 
-const devices = useCameraDevice('back');
-const device = devices;
+  const devices = useCameraDevice('back');
+  const device = devices;
 
   useEffect(() => {
     checkOrRequestPermission();
   }, []);
 
   const checkOrRequestPermission = async () => {
-    // 1. Check the current permission status
     const status = await Camera.getCameraPermissionStatus();
-    console.log("STATTuuuuss",status)
-    // 2. If not authorized, request permission
     if (status !== 'granted') {
       const newStatus = await Camera.requestCameraPermission();
       setCameraPermission(newStatus);
@@ -30,12 +24,10 @@ const device = devices;
         );
       }
     } else {
-      // Already authorized
       setCameraPermission('granted');
     }
   };
 
-  // If camera permission not yet authorized, show a button to re-request
   if (cameraPermission !== 'granted') {
     return (
       <View style={styles.permissionContainer}>
@@ -52,7 +44,6 @@ const device = devices;
     );
   }
 
-  // If no device is found, show an error
   if (!device) {
     return (
       <View style={styles.permissionContainer}>
@@ -63,24 +54,20 @@ const device = devices;
 
   return (
     <View style={styles.container}>
-      {/* Camera Preview */}
       <Camera
         style={StyleSheet.absoluteFill}
         device={device}
         isActive={true}
       />
 
-      {/* Top Bar */}
       <View style={styles.topBar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          {/* <Icon name="arrow-back" size={28} color="#fff" /> */}
           <Icon name="angle-left" size={40} color="#aaa" />
         </TouchableOpacity>
         <Text style={styles.topBarTitle}>Google Lens</Text>
         <Icon name="ellipsis-vertical" size={28} color="#fff" />
       </View>
 
-      {/* Lens Overlay (the bounding box corners) */}
       <View style={styles.overlayContainer}>
         <View style={styles.overlayCornerTopLeft} />
         <View style={styles.overlayCornerTopRight} />
@@ -88,20 +75,16 @@ const device = devices;
         <View style={styles.overlayCornerBottomRight} />
       </View>
 
-      {/* Bottom Action Bar */}
       <View style={styles.bottomBar}>
-        {/* Translate Button */}
         <TouchableOpacity style={styles.bottomBarItem}>
           <Icon name="language-outline" size={24} color="#fff" />
           <Text style={styles.bottomBarItemText}>Translate</Text>
         </TouchableOpacity>
 
-        {/* Big Circle Button (Search) */}
         <TouchableOpacity style={styles.lensButton}>
           <Icon name="search" size={24} color="#fff" />
         </TouchableOpacity>
 
-        {/* Homework Button */}
         <TouchableOpacity style={styles.bottomBarItem}>
           <Icon name="book-outline" size={24} color="#fff" />
           <Text style={styles.bottomBarItemText}>Homework</Text>
